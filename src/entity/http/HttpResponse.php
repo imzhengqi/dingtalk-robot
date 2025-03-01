@@ -1,5 +1,5 @@
 <?php
-namespace zhengqi\dingtalk\robot\request;
+namespace zhengqi\dingtalk\robot\entity\http;
 
 class HttpResponse
 {

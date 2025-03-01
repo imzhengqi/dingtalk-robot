@@ -41,7 +41,7 @@ class MarkdownEntity extends AbstractEntity
     {
         return [
             'title' => $this->title,
-            'content' => $this->text,
+            'text' => $this->text,
         ];
     }
 }

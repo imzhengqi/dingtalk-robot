@@ -1,9 +1,10 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\request;
+namespace zhengqi\dingtalk\robot\trait;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use zhengqi\dingtalk\robot\entity\http\HttpResponse;
 use zhengqi\dingtalk\robot\exception\HttpException;
 
 /**

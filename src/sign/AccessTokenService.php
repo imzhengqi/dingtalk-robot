@@ -4,9 +4,9 @@ namespace zhengqi\dingtalk\robot\sign;
 
 use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\AccessTokenEntity;
+use zhengqi\dingtalk\robot\entity\http\HttpResponse;
 use zhengqi\dingtalk\robot\enums\UrlEnum;
-use zhengqi\dingtalk\robot\request\HttpClient;
-use zhengqi\dingtalk\robot\request\HttpResponse;
+use zhengqi\dingtalk\robot\trait\HttpClient;
 
 /**
  * 获取 access token 服务

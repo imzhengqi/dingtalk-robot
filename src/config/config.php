@@ -12,6 +12,10 @@ class Config
 
     private string $appSecret = '';
 
+    private string $secret = '';
+
+    private string $accessToken = '';
+
     /**
      * @param string $agentId
      * @return Config
@@ -66,12 +70,49 @@ class Config
         return $this;
     }
 
+    /**
+     * @param string $secret
+     * @return Config
+     */
+    public function setSecret(string $secret): Config
+    {
+        $this->secret = $secret;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecret(): string
+    {
+        return $this->secret;
+    }
+
+    /**
+     * @param string $accessToken
+     */
+    public function setAccessToken(string $accessToken): Config
+    {
+        $this->accessToken = $accessToken;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
     public function toArray(): array
     {
         return [
-            'agentId' => $this->agentId,
-            'appKey' => $this->appKey,
-            'appSecret' => $this->appSecret,
+            'agent_id' => $this->agentId,
+            'app_key' => $this->appKey,
+            'app_secret' => $this->appSecret,
+            'secret' => $this->secret,
+            'access_token' => $this->accessToken,
         ];
     }
 }

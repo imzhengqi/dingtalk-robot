@@ -1,5 +1,5 @@
 <?php
-namespace zhengqi\exception;
+namespace zhengqi\dingtalk\robot\exception;
 
 /**
  * 参数错误

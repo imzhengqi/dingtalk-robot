@@ -47,24 +47,33 @@ final class MessageTypeEnum extends AbstractEnum
      */
     private static function handlerList(): array
     {
-        $enumList = self::getClassConstants();
+        $enumList = self::getConstants();
+
+        echo '---> message type list' . PHP_EOL;
+        var_dump($enumList);
 
         $handlerList = [];
         foreach ($enumList as $enum) {
             $handlerList[$enum['type']] = $enum['handler'];
         }
 
+        echo '---> handler list' . PHP_EOL;
+        var_dump($handlerList);
+
         return $handlerList;
     }
 
     /**
      * @param string $messageType
-     * @return MessageStrategy
+     * @return MessageStrategy|null
      */
-    public static function handlerByType(string $messageType): MessageStrategy
+    public static function handlerByType(string $messageType): MessageStrategy|null
     {
-        $classname = self::handlerList()[$messageType];
-        return new $classname();
+        $handlerList = self::handlerList();
+        if (!isset($handlerList[$messageType])) {
+            return null;
+        }
+        return new $handlerList[$messageType]();
     }
 
 

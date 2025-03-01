@@ -28,7 +28,9 @@ class DingTalkRobot
         $this->config
             ->setAgentId($config["agent_id"])
             ->setAppKey($config["app_key"])
-            ->setAppSecret($config["app_secret"]);
+            ->setAppSecret($config["app_secret"])
+            ->setAccessToken($config["access_token"])
+            ->setSecret($config["secret"]);
     }
 
     /**
@@ -38,8 +40,8 @@ class DingTalkRobot
      */
     public function send(array $messageData): array
     {
-        $messageSender = new MessageSender();
-        return $messageSender->send($messageData);
+        $messageSender = new MessageSender($this->config);
+        return $messageSender->send($messageData)->toArray();
     }
 
     /**

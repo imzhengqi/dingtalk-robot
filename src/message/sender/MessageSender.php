@@ -2,14 +2,23 @@
 
 namespace zhengqi\dingtalk\robot\message\sender;
 
+use zhengqi\dingtalk\robot\config\Config;
+use zhengqi\dingtalk\robot\entity\http\HttpResponse;
 use zhengqi\dingtalk\robot\message\enum\MessageTypeEnum;
-use zhengqi\exception\InvalidArgumentException;
+use zhengqi\dingtalk\robot\exception\InvalidArgumentException;
 
 class MessageSender
 {
     private string $messageType;
 
     private MessageStrategy $strategy;
+
+    private Config $config;
+
+    public function __construct(Config $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param string $messageType
@@ -28,25 +37,24 @@ class MessageSender
     }
 
     /**
+     * 找到对应的消息处理策略
      * @return MessageStrategy
      */
     private function getStrategyByMessageType(): MessageStrategy
     {
-        // 验证消息类型
-        if (!MessageTypeEnum::isExisted($this->messageType)) {
+        $strategy = MessageTypeEnum::handlerByType($this->messageType);
+        if ($strategy === null) {
             throw new InvalidArgumentException("invalid argument: msgtype.");
         }
-
-        // 找到对应的消息处理策略
-        return MessageTypeEnum::handlerByType($this->messageType);
+        return $strategy;
     }
 
     /**
      * 发送消息
      * @param array $messageData
-     * @return array
+     * @return HttpResponse
      */
-    public function send(array $messageData): array
+    public function send(array $messageData): HttpResponse
     {
         // 当前消息类型
         $this->setMessageType($messageData['msgtype']);
@@ -55,6 +63,6 @@ class MessageSender
         $this->setStrategy($this->getStrategyByMessageType());
 
         // 发送消息
-        return $this->strategy->sendMessage($messageData);
+        return $this->strategy->config($this->config)->sendMessage($messageData);
     }
 }

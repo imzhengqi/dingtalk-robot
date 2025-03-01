@@ -11,7 +11,9 @@ abstract class AbstractEnum
      */
     public static function getConstants(): array
     {
-        $reflectionClass = new ReflectionClass(__CLASS__);
+        echo '---> current classname ' . __CLASS__ . PHP_EOL;
+        echo '---> current classname ' . static::class . PHP_EOL;
+        $reflectionClass = new ReflectionClass(static::class);
         return $reflectionClass->getConstants();
     }
 
@@ -25,6 +27,9 @@ abstract class AbstractEnum
         // 获取用户定义的常量
         $allConstants = get_defined_constants(true)['user'];
 
+        var_dump('---> all constants' . PHP_EOL);
+        var_dump($allConstants);
+
         $classConstants = [];
         foreach ($allConstants as $name => $value) {
             if (str_starts_with($name, $className . '::')) {
@@ -32,16 +37,8 @@ abstract class AbstractEnum
             }
         }
 
-        return $classConstants;
-    }
+        var_dump($classConstants);
 
-    /**
-     * 验证 常量是否存在
-     * @param string $enum
-     * @return bool
-     */
-    public static function isExisted(string $enum): bool
-    {
-        return in_array($enum, self::getClassConstants(), true);
+        return $classConstants;
     }
 }
