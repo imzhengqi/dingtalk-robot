@@ -3,8 +3,8 @@
 namespace zhengqi\dingtalk\robot;
 
 use HttpClient;
-use zhengqi\dingtalk\robot\message\MessageSender;
-use zhengqi\dingtalk\robot\message\text\TextStrategy;
+use zhengqi\dingtalk\robot\message\sender\MessageSender;
+use zhengqi\dingtalk\robot\message\sender\feedCard\TextStrategy;
 
 /**
  * 钉钉机器人

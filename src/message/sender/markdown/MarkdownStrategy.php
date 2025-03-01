@@ -1,25 +1,26 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\message\sender\text;
+namespace zhengqi\dingtalk\robot\message\sender\markdown;
 
 use zhengqi\dingtalk\robot\message\sender\AbstractMessageStrategy;
 use zhengqi\dingtalk\robot\message\sender\entity\AtEntity;
-use zhengqi\dingtalk\robot\message\sender\entity\TextEntity;
+use zhengqi\dingtalk\robot\message\sender\entity\MarkdownEntity;
 use zhengqi\dingtalk\robot\message\sender\MessageStrategy;
 
 /**
- * 文本消息策略
+ * Markdown消息策略
  */
-class TextStrategy extends AbstractMessageStrategy implements MessageStrategy
+class MarkdownStrategy extends AbstractMessageStrategy implements MessageStrategy
 {
-    private TextEntity $textEntity;
+    private MarkdownEntity $markdownEntity;
 
     private AtEntity $atEntity;
 
     protected array $messageBody = [
-        'msgtype' => 'text',
-        'text' => [
-            'content' => '',
+        'msgtype' => 'markdown',
+        'markdown' => [
+            'title' => '',
+            'text' => '',
         ],
         'at' => [
             'atMobiles' => [],
@@ -31,7 +32,7 @@ class TextStrategy extends AbstractMessageStrategy implements MessageStrategy
     public function __construct()
     {
         parent::__construct();
-        $this->textEntity = new TextEntity();
+        $this->markdownEntity = new MarkdownEntity();
         $this->atEntity = new AtEntity();
     }
 
@@ -47,8 +48,9 @@ class TextStrategy extends AbstractMessageStrategy implements MessageStrategy
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->textEntity
-                ->setContent($messageEntity['content'])
+            $messageType => $this->markdownEntity
+                ->setTitle($messageEntity['title'])
+                ->setText($messageEntity['text'])
                 ->toArray(),
             'at' => $this->atEntity
                 ->setAtMobiles($messageData['at']['atMobiles'])

@@ -1,5 +1,5 @@
 <?php
-namespace zhengqi\dingtalk\robot\message\entity;
+namespace zhengqi\dingtalk\robot\message\sender\entity;
 
 /**
  * $data = [

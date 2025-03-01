@@ -1,5 +1,5 @@
 <?php
-namespace zhengqi\dingtalk\robot\message\entity;
+namespace zhengqi\dingtalk\robot\message\sender\entity;
 
 /**
  * 消息 @指定用户
@@ -14,6 +14,7 @@ class AtEntity extends AbstractEntity
 
     /**
      * @param array $atMobiles
+     * @return AtEntity
      */
     public function setAtMobiles(array $atMobiles): AtEntity
     {
@@ -23,6 +24,7 @@ class AtEntity extends AbstractEntity
 
     /**
      * @param array $atUserIds
+     * @return AtEntity
      */
     public function setAtUserIds(array $atUserIds): AtEntity
     {
@@ -32,6 +34,7 @@ class AtEntity extends AbstractEntity
 
     /**
      * @param bool $isAtAll
+     * @return AtEntity
      */
     public function setIsAtAll(bool $isAtAll): AtEntity
     {

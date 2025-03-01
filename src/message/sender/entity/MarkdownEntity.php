@@ -1,6 +1,6 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\message\entity;
+namespace zhengqi\dingtalk\robot\message\sender\entity;
 
 /**
  * $data = [
@@ -15,29 +15,31 @@ class MarkdownEntity extends AbstractEntity
 {
     private string $title = '';
 
-    private string $content = '';
+    private string $text = '';
 
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): MarkdownEntity
     {
         $this->title = $title;
+        return $this;
     }
 
     /**
-     * @param string $content
+     * @param string $text
      */
-    public function setContent(string $content): void
+    public function setText(string $text): MarkdownEntity
     {
-        $this->content = $content;
+        $this->text = $text;
+        return $this;
     }
 
     public function toArray(): array
     {
         return [
             'title' => $this->title,
-            'content' => $this->content,
+            'content' => $this->text,
         ];
     }
 }

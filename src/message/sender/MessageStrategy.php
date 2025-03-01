@@ -1,6 +1,6 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\message;
+namespace zhengqi\dingtalk\robot\message\sender;
 
 interface MessageStrategy
 {

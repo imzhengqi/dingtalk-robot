@@ -1,5 +1,5 @@
 <?php
-namespace zhengqi\dingtalk\robot\message\entity;
+namespace zhengqi\dingtalk\robot\message\sender\entity;
 
 /**
  * $data = [
@@ -24,34 +24,42 @@ class LinkEntity extends AbstractEntity
 
     /**
      * @param string $title
+     * @return LinkEntity
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): LinkEntity
     {
         $this->title = $title;
+        return $this;
     }
 
     /**
      * @param string $text
+     * @return LinkEntity
      */
-    public function setText(string $text): void
+    public function setText(string $text): LinkEntity
     {
         $this->text = $text;
+        return $this;
     }
 
     /**
      * @param string $picUrl
+     * @return LinkEntity
      */
-    public function setPicUrl(string $picUrl): void
+    public function setPicUrl(string $picUrl): LinkEntity
     {
         $this->picUrl = $picUrl;
+        return $this;
     }
 
     /**
      * @param string $messageUrl
+     * @return LinkEntity
      */
-    public function setMessageUrl(string $messageUrl): void
+    public function setMessageUrl(string $messageUrl): LinkEntity
     {
         $this->messageUrl = $messageUrl;
+        return $this;
     }
 
 
