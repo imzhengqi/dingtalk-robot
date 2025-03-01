@@ -3,7 +3,7 @@
 namespace zhengqi\dingtalk\robot;
 
 use zhengqi\dingtalk\robot\config\Config;
-use zhengqi\dingtalk\robot\message\sender\feedCard\TextStrategy;
+use zhengqi\dingtalk\robot\entity\AccessTokenEntity;
 use zhengqi\dingtalk\robot\message\sender\MessageSender;
 use zhengqi\dingtalk\robot\sign\AccessTokenService;
 
@@ -16,8 +16,6 @@ class DingTalkRobot
 
     public function __construct(array $config = [])
     {
-        var_dump('---> config data ' . PHP_EOL);
-        var_dump($config);
         $this->formatConfig($config);
     }
 
@@ -48,12 +46,11 @@ class DingTalkRobot
      * 获取 access_token
      * 请自行缓存结果
      * 频繁请求会被限制
-     * @return array ['accessToken' => 'fw8ef8we8f76e6f7s8dxxxx', '' => 7200]
+     * @return AccessTokenEntity
      * @throws \Exception
      */
-    public function getAccessToken(): array
+    public function getAccessToken(): AccessTokenEntity
     {
-        var_dump('--- start getAccessToken ---' . PHP_EOL);
         $accessTokenService = new AccessTokenService($this->config);
         return $accessTokenService->getAccessToken();
     }

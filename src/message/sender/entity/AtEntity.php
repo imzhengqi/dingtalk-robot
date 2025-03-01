@@ -1,6 +1,8 @@
 <?php
 namespace zhengqi\dingtalk\robot\message\sender\entity;
 
+use zhengqi\dingtalk\robot\entity\AbstractEntity;
+
 /**
  * 消息 @指定用户
  */

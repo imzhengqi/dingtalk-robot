@@ -1,7 +1,7 @@
 <?php
 namespace zhengqi\dingtalk\robot\message\sender\entity\actionCard;
 
-use zhengqi\dingtalk\robot\message\sender\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\AbstractEntity;
 
 /**
  * ActionCard消息类型实体

@@ -1,6 +1,8 @@
 <?php
 namespace zhengqi\dingtalk\robot\message\sender\entity;
 
+use zhengqi\dingtalk\robot\entity\AbstractEntity;
+
 /**
  * $data = [
  *      'msgtype' => 'text',
