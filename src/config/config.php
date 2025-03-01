@@ -12,39 +12,58 @@ class Config
 
     private string $appSecret = '';
 
-    private string $robotSendUrl = 'https://oapi.dingtalk.com/robot/send';
-
-
     /**
      * @param string $agentId
+     * @return Config
      */
-    public function setAgentId(string $agentId): void
+    public function setAgentId(string $agentId): Config
     {
         $this->agentId = $agentId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAgentId(): string
+    {
+        return $this->agentId;
     }
 
     /**
      * @param string $appKey
+     * @return Config
      */
-    public function setAppKey(string $appKey): void
+    public function setAppKey(string $appKey): Config
     {
         $this->appKey = $appKey;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppKey(): string
+    {
+        return $this->appKey;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAppSecret(): string
+    {
+        return $this->appSecret;
     }
 
     /**
      * @param string $appSecret
+     * @return Config
      */
-    public function setAppSecret(string $appSecret): void
+    public function setAppSecret(string $appSecret): Config
     {
         $this->appSecret = $appSecret;
-    }
-
-    /**
-     * @param string $robotSendUrl
-     */
-    public function setRobotSendUrl(string $robotSendUrl): void
-    {
-        $this->robotSendUrl = $robotSendUrl;
+        return $this;
     }
 
     public function toArray(): array
@@ -53,14 +72,6 @@ class Config
             'agentId' => $this->agentId,
             'appKey' => $this->appKey,
             'appSecret' => $this->appSecret,
-            'robotSendUrl' => $this->robotSendUrl,
         ];
     }
 }
-
-//return [
-//    'agent_id' => '31244001',
-//    'app_key' => 'dingcjc63iitbqjfmfqs',
-//    'app_secret' => 'BzSiXO4XcTHcnQb-aa9WpNRK57UCerof5ZB3CmYa7Q7qxITXf5_erIZ2gg_tNxUC',
-//    'robot_send_url' => 'https://oapi.dingtalk.com/robot/send',
-//];

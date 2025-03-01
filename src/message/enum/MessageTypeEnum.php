@@ -2,6 +2,7 @@
 
 namespace zhengqi\dingtalk\robot\message\enum;
 
+use zhengqi\dingtalk\robot\enums\AbstractEnum;
 use zhengqi\dingtalk\robot\message\sender\actionCard\ActionCard2Strategy;
 use zhengqi\dingtalk\robot\message\sender\actionCard\ActionCardStrategy;
 use zhengqi\dingtalk\robot\message\sender\feedCard\FeedCardStrategy;

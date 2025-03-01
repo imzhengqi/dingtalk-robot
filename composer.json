@@ -1,21 +1,25 @@
 {
-    "name": "zhengqi/dingtalk-robot",
-    "description": "简单易用的钉钉机器人",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "zhengqi\\dingtalk\\robot\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "zhengqi"
-        }
-    ],
-    "prefer-stable": true,
-    "minimum-stability": "stable",
-    "require": {
-        "php": ">=8.1"
+  "name": "zhengqi/dingtalk-robot",
+  "description": "简单易用的钉钉机器人",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "zhengqi\\dingtalk\\robot\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "zhengqi"
+    }
+  ],
+  "prefer-stable": true,
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=8.1",
+    "guzzlehttp/guzzle": "^7.9"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^11.2"
+  }
 }

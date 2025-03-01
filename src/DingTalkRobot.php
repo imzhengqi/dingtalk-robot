@@ -2,108 +2,60 @@
 
 namespace zhengqi\dingtalk\robot;
 
-use HttpClient;
-use zhengqi\dingtalk\robot\message\sender\MessageSender;
+use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\message\sender\feedCard\TextStrategy;
+use zhengqi\dingtalk\robot\message\sender\MessageSender;
+use zhengqi\dingtalk\robot\sign\AccessTokenService;
 
 /**
  * 钉钉机器人
  */
 class DingTalkRobot
 {
-    private array $config = [
-
-    ];
-
-    private MessageSender $messageSender;
+    private Config $config;
 
     public function __construct(array $config = [])
     {
-        $this->config = array_merge($this->config, $config);
-        $this->messageSender = new MessageSender();
+        var_dump('---> config data ' . PHP_EOL);
+        var_dump($config);
+        $this->formatConfig($config);
     }
 
-    public function send(array $messageData)
+    /**
+     * @param array $config
+     */
+    private function formatConfig(array $config): void
     {
-        $this->messageSender->send($messageData);
+        $this->config = new Config();
+        $this->config
+            ->setAgentId($config["agent_id"])
+            ->setAppKey($config["app_key"])
+            ->setAppSecret($config["app_secret"]);
     }
 
-
-    public function sendMarkdown(array $message)
+    /**
+     * 发送机器人消息
+     * @param array $messageData
+     * @return array
+     */
+    public function send(array $messageData): array
     {
-        $data = [
-            'msgtype' => 'markdown',
-            'markdown' => [
-                'title' => 'title title',
-                'text' => 'link text',
-            ]
-        ];
-
-
+        $messageSender = new MessageSender();
+        return $messageSender->send($messageData);
     }
 
-
-    public function sendLink(array $message)
+    /**
+     * 获取 access_token
+     * 请自行缓存结果
+     * 频繁请求会被限制
+     * @return array ['accessToken' => 'fw8ef8we8f76e6f7s8dxxxx', '' => 7200]
+     * @throws \Exception
+     */
+    public function getAccessToken(): array
     {
-        $data = [
-            'msgtype' => 'link',
-            'link' => [
-                'title' => 'title title',
-                'text' => 'link text',
-                'picUrl' => 'picurl image url',
-                'messageUrl' => 'message message url',
-            ]
-        ];
+        var_dump('--- start getAccessToken ---' . PHP_EOL);
+        $accessTokenService = new AccessTokenService($this->config);
+        return $accessTokenService->getAccessToken();
     }
 
-    public function sendFeedCard(array $message)
-    {
-        $data = [
-            'msgtype' => 'feedCard',
-            'feedCard' => [
-                'links' => [
-                    [
-                        'title' => 'title title',
-                        'messageURL' => 'message message url',
-                        'picURL' => 'picurl image url',
-                    ],
-                    [
-                        'title' => 'title title',
-                        'messageURL' => 'message message url',
-                        'picURL' => 'picurl image url',
-                    ],
-                ],
-            ]
-        ];
-    }
-
-    public function sendActionCard(array $message)
-    {
-        $data = [
-            'msgtype' => 'actionCard',
-            'actionCard' => [
-                'title' => 'title title',
-                'text' => 'link text',
-                'btnOrientation' => 'picurl image url',
-                'singleTitle' => 'picurl image url',
-                'singleURL' => 'message message url',
-            ]
-        ];
-    }
-
-    public function sendActionCard2(array $message)
-    {
-        $data = [
-            'msgtype' => 'actionCard',
-            'actionCard' => [
-                'title' => 'title title',
-                'text' => 'link text',
-                'btnOrientation' => 'picurl image url',
-                'btns' => [
-                    ['title' => '', 'actionURL' => ''],
-                    ['title' => '', 'actionURL' => ''],
-                ],
-            ]
-        ];
-    }
 }
