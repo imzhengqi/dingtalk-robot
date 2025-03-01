@@ -1,6 +1,6 @@
-.idea
-.vscode
-.DS_Store
-vendor
-tests
+/.idea
+/.vscode
+/.DS_Store
+/tests/
+/vendor/
 composer.lock
