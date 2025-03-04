@@ -2,47 +2,26 @@
 
 namespace zhengqi\dingtalk\robot;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\AccessTokenEntity;
-use zhengqi\dingtalk\robot\message\sender\MessageSender;
+use zhengqi\dingtalk\robot\services\message\MessageSenderContainer;
+use zhengqi\dingtalk\robot\services\ServiceContainer;
 use zhengqi\dingtalk\robot\sign\AccessTokenService;
 
 /**
  * 钉钉机器人
+ * @method messageSender();
  */
-class DingTalkRobot
+class DingTalkRobot extends ServiceContainer
 {
-    private Config $config;
+    protected array $services = [
+        'messageSender' => MessageSenderContainer::class,
+    ];
 
-    public function __construct(array $config = [])
+    public function __construct(object|array $config = [])
     {
-        $this->formatConfig($config);
+        parent::__construct($config);
     }
 
-    /**
-     * @param array $config
-     */
-    private function formatConfig(array $config): void
-    {
-        $this->config = new Config();
-        $this->config
-            ->setAgentId($config["agent_id"])
-            ->setAppKey($config["app_key"])
-            ->setAppSecret($config["app_secret"])
-            ->setAccessToken($config["access_token"])
-            ->setSecret($config["secret"]);
-    }
-
-    /**
-     * 发送机器人消息
-     * @param array $messageData
-     * @return array
-     */
-    public function send(array $messageData): array
-    {
-        $messageSender = new MessageSender($this->config);
-        return $messageSender->send($messageData)->toArray();
-    }
 
     /**
      * 获取 access_token
