@@ -115,13 +115,16 @@ $dingTalkRobot->messageSender()->actionCard2()->send([
 ```
 
 ## 2. 扩展
-TODO 如果官方推出了新的消息类型，
+如果官方推出了新的消息类型，我还没更新，你又着急用的话
 ```
 <?php
 
 use zhengqi\dingtalk\robot\DingTalkTobot;
 
-// 继承 AbstractMessageStrategy 实现 MessageStrategy接口
-// 会自动注册
-
+// 继承 AbstractMessageSender 实现 IMessageSender接口
+// 注册后发送
+$dingTalkRobot->messageSender()
+->register('testNewMsgType', TestNewMessageSender::class)
+->testNewMsgType()
+->send()
 ```
