@@ -45,7 +45,7 @@ abstract class AbstractMessageSender extends ServiceContainer implements IMessag
         // 请求地址
         $this->sendUrl = $this->formatSendUrl();
         // 发送消息
-        return $this->post($this->sendUrl, $this->messageBody, $this->config->getOptions);
+        return $this->post($this->sendUrl, $this->messageBody, $this->config->getOptions());
     }
 
     /**
