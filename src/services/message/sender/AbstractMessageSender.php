@@ -45,16 +45,13 @@ abstract class AbstractMessageSender extends ServiceContainer implements IMessag
         // 请求地址
         $this->sendUrl = $this->formatSendUrl();
         // 发送消息
-        $response = $this->post($this->sendUrl, $this->messageBody, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-            ]
-        ]);
-        var_dump(PHP_EOL . '---> send message result : ' . PHP_EOL);
-        var_dump($response);
-        return $response;
+        return $this->post($this->sendUrl, $this->messageBody, $this->config->getOptions);
     }
 
+    /**
+     * 拼接发送地址
+     * @return string
+     */
     private function formatSendUrl(): string
     {
         $signService = $this->sign()->generate();

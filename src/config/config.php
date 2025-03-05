@@ -21,6 +21,12 @@ class Config
 
     private string $accessToken = '';
 
+    private array $options = [
+        'headers' => [
+            'Content-Type' => 'application/json',
+        ]
+    ];
+
     /**
      * @param string $agentId
      * @return Config
@@ -112,6 +118,24 @@ class Config
     }
 
     /**
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options): Config
+    {
+        $this->options = $options;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
      * 配置数组转对象
      * @param array|Config $config
      * @return Config
@@ -136,7 +160,8 @@ class Config
             ->setAppKey($config["app_key"])
             ->setAppSecret($config["app_secret"])
             ->setAccessToken($config["access_token"])
-            ->setSecret($config["secret"]);
+            ->setSecret($config["secret"])
+            ->setOptions($config["options"]);
         return $this;
     }
 
@@ -152,6 +177,7 @@ class Config
             'app_secret' => $this->appSecret,
             'secret' => $this->secret,
             'access_token' => $this->accessToken,
+            'options' => $this->options,
         ];
     }
 }
