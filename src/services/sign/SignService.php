@@ -48,9 +48,9 @@ class SignService extends ServiceContainer
 
     /**
      * 生成签名
-     * @return string
+     * @return SignService
      */
-    public function generate(): string
+    public function generate(): self
     {
         // 1. 拼接签名字符串
         $stringToSign = $this->timeMillis . "\n" . $this->secret;
@@ -64,7 +64,7 @@ class SignService extends ServiceContainer
         // 4. URL 编码
         $this->sign = urlencode($base64Sign);
 
-        return $this->sign;
+        return $this;
     }
 
     /**

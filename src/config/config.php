@@ -121,9 +121,9 @@ class Config
      * @param array $options
      * @return $this
      */
-    public function setOptions(array $options): Config
+    public function setOptions(array $options = []): Config
     {
-        $this->options = $options;
+        $this->options = array_merge($this->options, $options);
         return $this;
     }
 

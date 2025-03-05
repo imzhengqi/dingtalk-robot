@@ -70,4 +70,17 @@ class Container
         }
         throw new Exception("Method '{$name}' not found.");
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     * @throws Exception
+     */
+    public function __get(string $name)
+    {
+        if (isset($this->services[$name])) {
+            return $this->services[$name];
+        }
+        throw new Exception("Method '{$name}' not found.");
+    }
 }

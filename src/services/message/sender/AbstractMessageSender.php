@@ -54,13 +54,14 @@ abstract class AbstractMessageSender extends ServiceContainer implements IMessag
      */
     private function formatSendUrl(): string
     {
+        // 1. 生成签名
         $signService = $this->sign()->generate();
-
+        // 2. URL参数
         $querySignEntity = QuerySignEntity::getInstance()
             ->setAccessToken($this->config->getAccessToken())
             ->setTimeMillis($signService->getTimeMillis())
             ->setSign($signService->getSign());
-
+        // 3. 拼接URL地址
         return UrlEnum::robotSendUrl() . '?' . http_build_query($querySignEntity->toArray());
     }
 

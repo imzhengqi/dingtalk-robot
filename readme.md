@@ -10,20 +10,20 @@ composer require zhengqi\dingtalk-robot
 ```
 <?php
 use zhengqi\dingtalk\robot\DingTalkTobot;
-use zhengqi\dingtalk\robot\config\Config;
 
 // 实例化
 $dingTalkRobot = new DingTalkTobot([
-    'agent_id' => 'agent_id',
-    'app_key' => 'app_key',
-    'app_secret' => 'app_secret',
-    'access_token' => 'access_token',
-    'secret' => 'secret',
+    'agent_id' => 'agent_id value',
+    'app_key' => 'app_key value',
+    'app_secret' => 'app_secret value',
+    'access_token' => 'access_token value',
+    'secret' => 'secret value',
+    'options' => [],
 ]);
 
 
 // 发送 text 消息
-$dingTalkRobot->messageSender()->text()->send([
+$dingTalkRobot->messageSender->text->send([
     'msgtype' => 'text',
     'text' => [
         'content' => '我就是我, @user123 是不一样的烟火',
@@ -36,7 +36,7 @@ $dingTalkRobot->messageSender()->text()->send([
 ]);
 
 // 发送 markdown 消息
-$dingTalkRobot->messageSender()->markdown()->send([
+$dingTalkRobot->messageSender->markdown->send([
     'msgtype' => 'markdown',
     'markdown' => [
         'title' => '杭州天气',
@@ -50,7 +50,7 @@ $dingTalkRobot->messageSender()->markdown()->send([
 ]);
 
 // 发送 link 消息
-$dingTalkRobot->messageSender()->link()->send([
+$dingTalkRobot->messageSender->link->send([
     'msgtype' => 'link',
     'link' => [
         'title' => '时代的火车向前开',
@@ -61,7 +61,7 @@ $dingTalkRobot->messageSender()->link()->send([
 ]);
 
 // 发送 feecCard 消息
-$dingTalkRobot->messageSender()->feedCard()->send([
+$dingTalkRobot->messageSender->feedCard->send([
     'msgtype' => 'feedCard',
     'feedCard' => [
         'links' => [
@@ -80,7 +80,7 @@ $dingTalkRobot->messageSender()->feedCard()->send([
 ]);
 
 // 发送 actionCard 消息
-$dingTalkRobot->messageSender()->actionCard()->send([
+$dingTalkRobot->messageSender->actionCard->send([
     'msgtype' => 'actionCard',
     'actionCard' => [
         'title' => '乔布斯说 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身',
@@ -92,7 +92,7 @@ $dingTalkRobot->messageSender()->actionCard()->send([
 ]);
 
 // 发送 actionCard2 消息
-$dingTalkRobot->messageSender()->actionCard2()->send([
+$dingTalkRobot->messageSender->actionCard2->send([
     'msgtype' => 'actionCard',
     'actionCard' => [
         'title' => '我 20 年前想打造一间苹果咖啡厅，而它正是 Apple Store 的前身',
@@ -123,7 +123,7 @@ use zhengqi\dingtalk\robot\DingTalkTobot;
 
 // 继承 AbstractMessageSender 实现 IMessageSender接口
 // 注册后发送
-$dingTalkRobot->messageSender()
+$dingTalkRobot->messageSender
 ->register('testNewMsgType', TestNewMessageSender::class)
 ->testNewMsgType()
 ->send()
