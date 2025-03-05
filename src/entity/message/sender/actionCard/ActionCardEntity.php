@@ -1,13 +1,17 @@
 <?php
+
 namespace zhengqi\dingtalk\robot\entity\message\sender\actionCard;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * ActionCard消息类型实体
  */
-class ActionCardEntity extends AbstractEntity
+class ActionCardEntity extends BaseEntity
 {
+    use Singleton;
+
     private string $title = '';
 
     private string $text = '';

@@ -2,10 +2,13 @@
 
 namespace zhengqi\dingtalk\robot\entity\message\sender\query;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
-class QuerySignEntity extends AbstractEntity
+class QuerySignEntity extends BaseEntity
 {
+    use Singleton;
+
     private string $accessToken;
 
     private int $timeMillis;

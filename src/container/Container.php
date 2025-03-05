@@ -9,6 +9,9 @@ use Exception;
  */
 class Container
 {
+    /**
+     * @var array 服务列表
+     */
     protected array $services = [];
 
     public function __construct()
@@ -17,7 +20,7 @@ class Container
 
     /**
      * @param string $serviceName
-     * @param object $serviceInstance
+     * @param string|object $serviceInstance
      * @return $this
      */
     public function register(string $serviceName, string|object $serviceInstance): self

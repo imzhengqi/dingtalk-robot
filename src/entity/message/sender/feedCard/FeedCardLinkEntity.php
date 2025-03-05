@@ -2,13 +2,15 @@
 
 namespace zhengqi\dingtalk\robot\entity\message\sender\feedCard;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * ActionCard消息类型实体
  */
-class FeedCardLinkEntity extends AbstractEntity
+class FeedCardLinkEntity extends BaseEntity
 {
+    use Singleton;
 
     private string $title = '';
 

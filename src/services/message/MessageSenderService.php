@@ -13,14 +13,16 @@ use zhengqi\dingtalk\robot\services\ServiceContainer;
 
 /**
  * 消息发送服务
- * 1. 自动注册服务
- * 2.
+ * @method text()
+ * @method link()
+ * @method markdown()
+ * @method feedCard()
+ * @method actionCard()
+ * @method actionCard2()
  */
-class MessageSenderContainer extends ServiceContainer
+class MessageSenderService extends ServiceContainer
 {
-    protected Config $config;
-
-    protected array $services = [
+    protected array $registerServices = [
         'text' => TextSender::class,
         'link' => LinkSender::class,
         'markdown' => MarkdownSender::class,

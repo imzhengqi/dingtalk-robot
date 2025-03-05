@@ -2,7 +2,6 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender\feedCard;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\message\sender\feedCard\FeedCardEntity;
 use zhengqi\dingtalk\robot\entity\message\sender\feedCard\FeedCardLinkEntity;
 use zhengqi\dingtalk\robot\services\message\sender\AbstractMessageSender;
@@ -13,10 +12,6 @@ use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
  */
 class FeedCardSender extends AbstractMessageSender implements IMessageSender
 {
-    private FeedCardEntity $feedCardEntity;
-
-    private FeedCardLinkEntity $feedCardLinkEntity;
-
     protected array $messageBody = [
         'msgtype' => 'feedCard',
         'feedCard' => [
@@ -30,13 +25,6 @@ class FeedCardSender extends AbstractMessageSender implements IMessageSender
         ],
     ];
 
-    public function __construct(Config $config)
-    {
-        parent::__construct($config);
-        $this->feedCardEntity = new FeedCardEntity();
-        $this->feedCardLinkEntity = new FeedCardLinkEntity();
-    }
-
     /**
      * 格式化消息实体
      * @param array $messageData
@@ -49,7 +37,7 @@ class FeedCardSender extends AbstractMessageSender implements IMessageSender
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->feedCardEntity
+            $messageType => FeedCardEntity::getInstance()
                 ->setLinks(
                     $this->formatLinks($messageEntity['links'])
                 )
@@ -65,7 +53,7 @@ class FeedCardSender extends AbstractMessageSender implements IMessageSender
     {
         $links = [];
         foreach ($messageLinks as $messageLink) {
-            $links[] = $this->feedCardLinkEntity
+            $links[] = FeedCardLinkEntity::getInstance()
                 ->setTitle($messageLink['title'])
                 ->setMessageUrl($messageLink['messageURL'])
                 ->setPicUrl($messageLink['picURL'])

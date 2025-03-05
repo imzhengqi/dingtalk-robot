@@ -2,15 +2,12 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender\link;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\message\sender\LinkEntity;
 use zhengqi\dingtalk\robot\services\message\sender\AbstractMessageSender;
 use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
 
 class LinkSender extends AbstractMessageSender implements IMessageSender
 {
-    private LinkEntity $linkEntity;
-
     protected array $messageBody = [
         'msgtype' => 'link',
         'link' => [
@@ -20,13 +17,6 @@ class LinkSender extends AbstractMessageSender implements IMessageSender
             'messageUrl' => '',
         ],
     ];
-
-    public function __construct(Config $config)
-    {
-        parent::__construct($config);
-        $this->linkEntity = new LinkEntity();
-    }
-
 
     /**
      * 格式化消息实体
@@ -40,7 +30,7 @@ class LinkSender extends AbstractMessageSender implements IMessageSender
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->linkEntity
+            $messageType => LinkEntity::getInstance()
                 ->setTitle($messageEntity['title'])
                 ->setText($messageEntity['text'])
                 ->setPicUrl($messageEntity['picUrl'])

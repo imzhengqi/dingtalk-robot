@@ -2,11 +2,15 @@
 
 namespace zhengqi\dingtalk\robot\entity;
 
+use zhengqi\dingtalk\robot\trait\Singleton;
+
 /**
  * AccessTokenEntity
  */
-class AccessTokenEntity extends AbstractEntity
+class AccessTokenEntity extends BaseEntity
 {
+    use Singleton;
+
     private string $accessToken = '';
 
     private string $expireIn = '0';

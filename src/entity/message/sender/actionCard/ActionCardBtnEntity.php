@@ -2,13 +2,15 @@
 
 namespace zhengqi\dingtalk\robot\entity\message\sender\actionCard;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * ActionCard消息类型的按钮实体
  */
-class ActionCardBtnEntity extends AbstractEntity
+class ActionCardBtnEntity extends BaseEntity
 {
+    use Singleton;
 
     private string $title = '';
 

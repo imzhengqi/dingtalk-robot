@@ -2,29 +2,35 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\http\HttpResponse;
 use zhengqi\dingtalk\robot\entity\message\sender\query\QuerySignEntity;
 use zhengqi\dingtalk\robot\enums\UrlEnum;
 use zhengqi\dingtalk\robot\exception\HttpException;
-use zhengqi\dingtalk\robot\sign\SignService;
+use zhengqi\dingtalk\robot\services\ServiceContainer;
+use zhengqi\dingtalk\robot\services\sign\SignService;
 use zhengqi\dingtalk\robot\trait\HttpClient;
 
 /**
  * 消息发送
+ * @method sign()
  */
-abstract class AbstractMessageSender implements IMessageSender
+abstract class AbstractMessageSender extends ServiceContainer implements IMessageSender
 {
     use HttpClient;
 
+    protected array $registerServices = [
+        'sign' => SignService::class,
+    ];
+
+    /**
+     * 消息发送地址
+     */
+    protected string $sendUrl;
+
+    /**
+     * @var array 消息实体
+     */
     protected array $messageBody;
-
-    protected Config $config;
-
-    public function __construct($config)
-    {
-        $this->config = $config;
-    }
 
     /**
      * 发送消息
@@ -34,33 +40,26 @@ abstract class AbstractMessageSender implements IMessageSender
      */
     public function send(array $messageData): HttpResponse
     {
-        // 格式化消息
+        // 消息实体
         $this->messageBody = $this->formatMessageBody($messageData);
-
         // 请求地址
-        $url = $this->sendUrl();
-
-        var_dump(PHP_EOL . '---> send message url = ' . PHP_EOL . $url);
-
+        $this->sendUrl = $this->formatSendUrl();
         // 发送消息
-        $response = $this->post($url, $this->messageBody, [
+        $response = $this->post($this->sendUrl, $this->messageBody, [
             'headers' => [
                 'Content-Type' => 'application/json',
             ]
         ]);
-
         var_dump(PHP_EOL . '---> send message result : ' . PHP_EOL);
         var_dump($response);
         return $response;
     }
 
-    private function sendUrl(): string
+    private function formatSendUrl(): string
     {
-        $signService = new SignService($this->config);
-        $signService->generateSign();
+        $signService = $this->sign()->generate();
 
-        $querySignEntity = new QuerySignEntity();
-        $querySignEntity
+        $querySignEntity = QuerySignEntity::getInstance()
             ->setAccessToken($this->config->getAccessToken())
             ->setTimeMillis($signService->getTimeMillis())
             ->setSign($signService->getSign());

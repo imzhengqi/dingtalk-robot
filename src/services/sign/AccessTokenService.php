@@ -1,11 +1,11 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\sign;
+namespace zhengqi\dingtalk\robot\services\sign;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\AccessTokenEntity;
 use zhengqi\dingtalk\robot\entity\http\HttpResponse;
 use zhengqi\dingtalk\robot\enums\UrlEnum;
+use zhengqi\dingtalk\robot\services\ServiceContainer;
 use zhengqi\dingtalk\robot\trait\HttpClient;
 
 /**
@@ -13,21 +13,14 @@ use zhengqi\dingtalk\robot\trait\HttpClient;
  * 请自行缓存结果
  * 过于频繁请求会遭到拦截
  */
-class AccessTokenService
+class AccessTokenService extends ServiceContainer
 {
     use HttpClient;
-
-    private Config $config;
-
-    public function __construct(Config $config)
-    {
-        $this->config = $config;
-    }
 
     /**
      * @return AccessTokenEntity
      */
-    private function getAccessTokenEntity(): AccessTokenEntity
+    private function getEntity(): AccessTokenEntity
     {
         return new AccessTokenEntity();
     }
@@ -37,9 +30,9 @@ class AccessTokenService
      * @param HttpResponse $response
      * @return AccessTokenEntity
      */
-    private function formatAccessToken(HttpResponse $response): AccessTokenEntity
+    private function formatEntity(HttpResponse $response): AccessTokenEntity
     {
-        $accessTokenEntity = $this->getAccessTokenEntity();
+        $accessTokenEntity = $this->getEntity();
         if ($response->getStatusCode() == '200') {
             $accessTokenEntity->setAccessToken($response['accessToken'])
                 ->setExpireIn($response['expireIn']);
@@ -51,7 +44,7 @@ class AccessTokenService
      * @return AccessTokenEntity
      * @throws \Exception
      */
-    public function getAccessToken(): AccessTokenEntity
+    public function get(): AccessTokenEntity
     {
         $requestData = [
             'appKey' => $this->config->getAppKey(),
@@ -67,6 +60,6 @@ class AccessTokenService
         // 请求结果
         $response = $this->post(UrlEnum::accessTokenUrl(), $requestData, $options);
         // 格式化输出
-        return $this->formatAccessToken($response);
+        return $this->formatEntity($response);
     }
 }

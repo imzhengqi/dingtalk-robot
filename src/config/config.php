@@ -1,11 +1,16 @@
 <?php
+
 namespace zhengqi\dingtalk\robot\config;
+
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * 钉钉配置
  */
 class Config
 {
+    use Singleton;
+
     private string $agentId = '';
 
     private string $appKey = '';
@@ -90,6 +95,7 @@ class Config
 
     /**
      * @param string $accessToken
+     * @return Config
      */
     public function setAccessToken(string $accessToken): Config
     {
@@ -105,6 +111,39 @@ class Config
         return $this->accessToken;
     }
 
+    /**
+     * 配置数组转对象
+     * @param array|Config $config
+     * @return Config
+     */
+    public function convert(array|Config $config): Config
+    {
+        if (is_array($config)) {
+            $this->toObject($config);
+        } else if ($config instanceof self) {
+            return $config;
+        }
+        return $this;
+    }
+
+    /**
+     * @param array $config
+     * @return $this
+     */
+    public function toObject(array $config): Config
+    {
+        self::getInstance()->setAgentId($config["agent_id"])
+            ->setAppKey($config["app_key"])
+            ->setAppSecret($config["app_secret"])
+            ->setAccessToken($config["access_token"])
+            ->setSecret($config["secret"]);
+        return $this;
+    }
+
+    /**
+     * 转为数组输出
+     * @return array
+     */
     public function toArray(): array
     {
         return [

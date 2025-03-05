@@ -2,7 +2,6 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender\actionCard;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\message\sender\actionCard\ActionCardEntity;
 use zhengqi\dingtalk\robot\services\message\sender\AbstractMessageSender;
 use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
@@ -12,8 +11,6 @@ use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
  */
 class ActionCardSender extends AbstractMessageSender implements IMessageSender
 {
-    private ActionCardEntity $actionCardEntity;
-
     protected array $messageBody = [
         'msgtype' => 'actionCard',
         'actionCard' => [
@@ -24,12 +21,6 @@ class ActionCardSender extends AbstractMessageSender implements IMessageSender
             'singleURL' => '',
         ],
     ];
-
-    public function __construct(Config $config)
-    {
-        parent::__construct($config);
-        $this->actionCardEntity = new ActionCardEntity();
-    }
 
     /**
      * 格式化消息实体
@@ -43,7 +34,7 @@ class ActionCardSender extends AbstractMessageSender implements IMessageSender
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->actionCardEntity
+            $messageType => ActionCardEntity::getInstance()
                 ->setTitle($messageEntity['title'])
                 ->setText($messageEntity['text'])
                 ->setBtnOrientation($messageEntity['btnOrientation'])

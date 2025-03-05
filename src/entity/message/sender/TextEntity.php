@@ -1,7 +1,8 @@
 <?php
 namespace zhengqi\dingtalk\robot\entity\message\sender;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * $data = [
@@ -11,12 +12,15 @@ use zhengqi\dingtalk\robot\entity\AbstractEntity;
  *      ]
  * ];
  */
-class TextEntity extends AbstractEntity
+class TextEntity extends BaseEntity
 {
+    use Singleton;
+
     private string $content = '';
 
     /**
      * @param string $content
+     * @return TextEntity
      */
     public function setContent(string $content): TextEntity
     {

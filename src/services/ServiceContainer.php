@@ -2,6 +2,7 @@
 
 namespace zhengqi\dingtalk\robot\services;
 
+use Exception;
 use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\container\Container;
 
@@ -10,25 +11,41 @@ use zhengqi\dingtalk\robot\container\Container;
  */
 class ServiceContainer extends Container
 {
-    protected array $services = [];
+    /**
+     * @var array 待注册服务
+     */
+    protected array $registerServices = [];
+
+    /**
+     * @var Config 钉钉相关配置
+     */
     protected Config $config;
 
+    /**
+     * @param object|array $config
+     * @throws Exception
+     */
     public function __construct(object|array $config)
     {
         parent::__construct();
-        $this->formatConfig($config);
+        $this->convertConfig($config);
         $this->registerServices();
     }
 
+    /**
+     * @return $this 批量注册服务
+     */
     public function registerServices(): self
     {
-        foreach ($this->services as $name => $serviceInstance) {
-            $this->register($name, $serviceInstance);
+        foreach ($this->registerServices as $serviceName => $handlerService) {
+            $this->register($serviceName, $handlerService);
         }
         return $this;
     }
 
     /**
+     * @override 重写注册方法
+     *
      * @param string $serviceName
      * @param string|object $serviceInstance
      * @return $this
@@ -40,21 +57,12 @@ class ServiceContainer extends Container
     }
 
     /**
+     * 如果是数组，转换成对象
      * @param object|array $config
      */
-    protected function formatConfig(object|array $config): void
+    private function convertConfig(object|array $config): void
     {
-        if ($config instanceof Config) {
-            $this->config = $config;
-        } else if (is_array($config)) {
-            $this->config = new Config();
-            $this->config
-                ->setAgentId($config["agent_id"])
-                ->setAppKey($config["app_key"])
-                ->setAppSecret($config["app_secret"])
-                ->setAccessToken($config["access_token"])
-                ->setSecret($config["secret"]);
-        }
+        $this->config = Config::getInstance()->convert($config);
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender\text;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\message\sender\AtEntity;
 use zhengqi\dingtalk\robot\entity\message\sender\TextEntity;
 use zhengqi\dingtalk\robot\services\message\sender\AbstractMessageSender;
@@ -14,10 +13,6 @@ use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
  */
 class TextSender extends AbstractMessageSender implements IMessageSender
 {
-    private TextEntity $textEntity;
-
-    private AtEntity $atEntity;
-
     protected array $messageBody = [
         'msgtype' => 'text',
         'text' => [
@@ -29,13 +24,6 @@ class TextSender extends AbstractMessageSender implements IMessageSender
             'isAtAll' => false,
         ],
     ];
-
-    public function __construct(Config $config)
-    {
-        parent::__construct($config);
-        $this->textEntity = new TextEntity();
-        $this->atEntity = new AtEntity();
-    }
 
     /**
      * 格式化消息实体
@@ -49,10 +37,10 @@ class TextSender extends AbstractMessageSender implements IMessageSender
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->textEntity
+            $messageType => TextEntity::getInstance()
                 ->setContent($messageEntity['content'])
                 ->toArray(),
-            'at' => $this->atEntity
+            'at' => AtEntity::getInstance()
                 ->setAtMobiles($messageData['at']['atMobiles'])
                 ->setAtUserIds($messageData['at']['atUserIds'])
                 ->setIsAtAll($messageData['at']['isAtAll'])

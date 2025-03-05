@@ -1,13 +1,16 @@
 <?php
 namespace zhengqi\dingtalk\robot\entity\message\sender;
 
-use zhengqi\dingtalk\robot\entity\AbstractEntity;
+use zhengqi\dingtalk\robot\entity\BaseEntity;
+use zhengqi\dingtalk\robot\trait\Singleton;
 
 /**
  * 消息 @指定用户
  */
-class AtEntity extends AbstractEntity
+class AtEntity extends BaseEntity
 {
+    use Singleton;
+
     private array $atMobiles = [];
 
     private array $atUserIds = [];

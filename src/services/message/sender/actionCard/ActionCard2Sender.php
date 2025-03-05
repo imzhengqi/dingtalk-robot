@@ -2,7 +2,6 @@
 
 namespace zhengqi\dingtalk\robot\services\message\sender\actionCard;
 
-use zhengqi\dingtalk\robot\config\Config;
 use zhengqi\dingtalk\robot\entity\message\sender\actionCard\ActionCard2Entity;
 use zhengqi\dingtalk\robot\entity\message\sender\actionCard\ActionCardBtnEntity;
 use zhengqi\dingtalk\robot\services\message\sender\AbstractMessageSender;
@@ -13,10 +12,6 @@ use zhengqi\dingtalk\robot\services\message\sender\IMessageSender;
  */
 class ActionCard2Sender extends AbstractMessageSender implements IMessageSender
 {
-    private ActionCard2Entity $actionCard2Entity;
-
-    private ActionCardBtnEntity $actionCardBtnEntity;
-
     protected array $messageBody = [
         'msgtype' => 'actionCard',
         'actionCard' => [
@@ -32,13 +27,6 @@ class ActionCard2Sender extends AbstractMessageSender implements IMessageSender
         ],
     ];
 
-    public function __construct(Config $config)
-    {
-        parent::__construct($config);
-        $this->actionCard2Entity = new ActionCard2Entity();
-        $this->actionCardBtnEntity = new ActionCardBtnEntity();
-    }
-
     /**
      * 格式化消息实体
      * @param array $messageData
@@ -51,7 +39,7 @@ class ActionCard2Sender extends AbstractMessageSender implements IMessageSender
 
         return [
             'msgtype' => $messageType,
-            $messageType => $this->actionCard2Entity
+            $messageType => ActionCard2Entity::getInstance()
                 ->setTitle($messageEntity['title'])
                 ->setText($messageEntity['text'])
                 ->setBtnOrientation($messageEntity['btnOrientation'])
@@ -70,7 +58,7 @@ class ActionCard2Sender extends AbstractMessageSender implements IMessageSender
     {
         $btns = [];
         foreach ($messageBtns as $messageBtn) {
-            $btns[] = $this->actionCardBtnEntity
+            $btns[] = ActionCardBtnEntity::getInstance()
                 ->setTitle($messageBtn['title'])
                 ->setActionURL($messageBtn['actionURL'])
                 ->toArray();

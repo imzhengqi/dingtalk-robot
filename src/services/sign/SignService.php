@@ -1,23 +1,30 @@
 <?php
 
-namespace zhengqi\dingtalk\robot\sign;
+namespace zhengqi\dingtalk\robot\services\sign;
 
 use zhengqi\dingtalk\robot\config\Config;
+use zhengqi\dingtalk\robot\services\ServiceContainer;
 
-class SignService
+class SignService extends ServiceContainer
 {
+    /**
+     * @var int 毫秒级时间戳
+     */
     private int $timeMillis = 0;
 
+    /**
+     * @var string secret
+     */
     private string $secret = '';
 
+    /**
+     * @var string 最终签名
+     */
     private string $sign = '';
-
-    private Config $config;
 
     public function __construct(Config $config)
     {
-        $this->config = $config;
-
+        parent::__construct($config);
         $this->secret = $config->getSecret();
         $this->timeMillis = $this->nowTimeMillis();
     }
@@ -43,18 +50,18 @@ class SignService
      * 生成签名
      * @return string
      */
-    public function generateSign(): string
+    public function generate(): string
     {
-        // 拼接签名字符串
+        // 1. 拼接签名字符串
         $stringToSign = $this->timeMillis . "\n" . $this->secret;
 
-        // 计算 HMAC-SHA256 签名
+        // 2. 计算 HMAC-SHA256 签名
         $signData = hash_hmac('sha256', $stringToSign, $this->secret, true);
 
-        // 5. Base64 编码
+        // 3. Base64 编码
         $base64Sign = base64_encode($signData);
 
-        // 6. URL 编码
+        // 4. URL 编码
         $this->sign = urlencode($base64Sign);
 
         return $this->sign;
@@ -66,9 +73,7 @@ class SignService
      */
     private function nowTimeMillis(): int
     {
-        $time = (int)(microtime(true) * 1000);
-        var_dump('---> now time milliseconds: ' . $time . PHP_EOL);
-        return $time;
+        return (int)(microtime(true) * 1000);
     }
 
 }
