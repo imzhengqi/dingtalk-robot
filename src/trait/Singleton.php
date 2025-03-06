@@ -35,11 +35,5 @@ trait Singleton
     protected function __clone()
     {
     }
-
-    /**
-     * 防止外部反序列化
-     */
-    protected function __wakeup()
-    {
-    }
+    
 }
