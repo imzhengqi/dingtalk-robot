@@ -3,9 +3,9 @@ namespace zhengqi\dingtalk\robot\entity\http;
 
 class HttpResponse
 {
-    private string $statusCode;
+    private string $statusCode = '';
 
-    private array $body;
+    private array $body = [];
 
     /**
      * @param string $statusCode
